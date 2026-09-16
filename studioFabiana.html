@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Fabiana — Unhas & Plástica dos Pés</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
+  :root{
+    --nude:#F7F0E9;
+    --nude-deep:#EFE3D8;
+    --white:#FFFFFF;
+    --rose:#C79B92;
+    --rose-deep:#A66F66;
+    --rose-pale:#EFDAD5;
+    --gold:#AD8A56;
+    --gold-light:#D9C39C;
+    --ink:#3A2B26;
+    --ink-soft:#7A655D;
+  }
+  *{ -webkit-tap-highlight-color: transparent; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Manrope', sans-serif;
+    background:var(--nude);
+    color:var(--ink);
+  }
+  .font-display{ font-family:'Fraunces', serif; }
+  .bg-nude{ background:var(--nude); }
+  .bg-nude-deep{ background:var(--nude-deep); }
+  .bg-rose{ background:var(--rose); }
+  .bg-rose-deep{ background:var(--rose-deep); }
+  .bg-rose-pale{ background:var(--rose-pale); }
+  .bg-gold{ background:var(--gold); }
+  .text-rose{ color:var(--rose); }
+  .text-rose-deep{ color:var(--rose-deep); }
+  .text-gold{ color:var(--gold); }
+  .text-ink{ color:var(--ink); }
+  .text-ink-soft{ color:var(--ink-soft); }
+  .border-gold{ border-color:var(--gold); }
+  .ring-rose{ --tw-ring-color: var(--rose); }
+
+  .btn-primary{
+    background:var(--ink);
+    color:var(--nude);
+    transition:transform .25s ease, background .25s ease;
+  }
+  .btn-primary:hover{ background:var(--rose-deep); transform:translateY(-2px); }
+
+  .btn-gold{
+    background:linear-gradient(135deg, var(--gold-light), var(--gold));
+    color:#2d2118;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .btn-gold:hover{ transform:translateY(-2px); box-shadow:0 10px 24px -8px rgba(173,138,86,.55); }
+
+  .btn-outline{
+    border:1px solid var(--ink);
+    color:var(--ink);
+    transition:all .25s ease;
+  }
+  .btn-outline:hover{ background:var(--ink); color:var(--nude); }
+
+  .card{
+    background:var(--white);
+    border:1px solid #ECE0D6;
+  }
+
+  .divider-gold{
+    width:56px; height:2px; background:linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  ::selection{ background:var(--rose-pale); color:var(--ink); }
+
+  input:focus, select:focus, textarea:focus{
+    outline:none;
+    border-color:var(--rose-deep) !important;
+    box-shadow:0 0 0 3px rgba(199,155,146,.18);
+  }
+
+  .time-slot{
+    transition:all .18s ease;
+  }
+  .time-slot:not(:disabled):hover{
+    border-color:var(--rose-deep);
+    background:var(--rose-pale);
+  }
+  .time-slot:disabled{
+    opacity:.4;
+    text-decoration:line-through;
+    cursor:not-allowed;
+  }
+  .time-slot.selected{
+    background:var(--ink);
+    color:var(--nude);
+    border-color:var(--ink);
+  }
+
+  .page{ display:none; }
+  .page.active{ display:block; }
+
+  .fade-up{
+    animation:fadeUp .7s cubic-bezier(.22,.61,.36,1) both;
+  }
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(18px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  .status-pill{
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.02em;
+    padding:.28rem .7rem;
+    border-radius:999px;
+    display:inline-block;
+  }
+  .status-Pendente{ background:#FDF0D5; color:#8A6A1E; }
+  .status-Confirmado{ background:#DDEFE2; color:#25683A; }
+  .status-Concluido{ background:#E3E1F5; color:#4C3F9E; }
+  .status-Cancelado{ background:#F6DEDC; color:#9C332A; }
+
+  .modal-backdrop{
+    background:rgba(58,43,38,.45);
+    backdrop-filter: blur(2px);
+  }
+
+  #toast-wrap{ position:fixed; top:1.25rem; right:1.25rem; z-index:100; display:flex; flex-direction:column; gap:.6rem; }
+  .toast{
+    min-width:260px; max-width:340px;
+    background:var(--white);
+    border-left:4px solid var(--rose-deep);
+    box-shadow:0 12px 30px -10px rgba(58,43,38,.35);
+    animation:toastIn .3s ease both;
+  }
+  .toast.error{ border-left-color:#B4453C; }
+  .toast.success{ border-left-color:#3F8A5A; }
+  @keyframes toastIn{
+    from{ opacity:0; transform:translateX(24px); }
+    to{ opacity:1; transform:translateX(0); }
+  }
+
+  .scrollbar-thin::-webkit-scrollbar{ height:6px; width:6px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb{ background:var(--rose); border-radius:99px; }
+
+  input[type="password"]::-ms-reveal{ display:none; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+  }
+</style>
+</head>
+<body class="bg-nude text-ink antialiased">
+
+<div id="toast-wrap"></div>
+
+<!-- =================== NAVBAR =================== -->
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="max-w-7xl mx-auto flex items-center justify-between px-5 sm:px-8 py-4">
+    <button onclick="goHome()" class="flex items-center gap-2 group">
+      <span class="font-display text-2xl tracking-wide">Studio <span class="text-rose-deep italic">Fabiana</span></span>
+    </button>
+
+    <div class="hidden md:flex items-center gap-9 text-sm font-medium text-ink-soft">
+      <a href="#servicos" onclick="scrollToSection(event,'servicos')" class="hover:text-ink transition-colors">Serviços</a>
+      <a href="#galeria" onclick="scrollToSection(event,'galeria')" class="hover:text-ink transition-colors">Galeria</a>
+      <a href="#depoimentos" onclick="scrollToSection(event,'depoimentos')" class="hover:text-ink transition-colors">Depoimentos</a>
+    </div>
+
+    <div id="nav-actions" class="flex items-center gap-3"></div>
+  </nav>
+</header>
+
+<!-- =================== HOME PAGE =================== -->
+<main id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28 bg-nude">
+    <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-rose-pale opacity-70 blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-gold-light opacity-20 blur-3xl" style="background:var(--gold-light)"></div>
+
+    <div class="relative max-w-7xl mx-auto px-5 sm:px-8 grid md:grid-cols-2 gap-14 items-center">
+      <div class="fade-up">
+        <p class="uppercase text-xs tracking-[0.25em] text-gold font-semibold mb-5">Manicure · Pedicure · Plástica dos Pés</p>
+        <h1 class="font-display text-5xl sm:text-6xl leading-[1.05] mb-6">
+          Cuidado que se vê<br> nos <span class="italic text-rose-deep">detalhes</span>.
+        </h1>
+        <p class="text-ink-soft text-lg max-w-md mb-9 leading-relaxed">
+          Um espaço pensado para o seu bem-estar, das mãos aos pés. Técnicas avançadas de plástica dos pés, unhas impecáveis e um atendimento que respeita o seu tempo.
+        </p>
+        <div class="flex flex-wrap items-center gap-4">
+          <button onclick="openBooking()" class="btn-gold px-8 py-4 rounded-full font-semibold text-sm tracking-wide">Agendar Horário</button>
+          <a href="#servicos" onclick="scrollToSection(event,'servicos')" class="btn-outline px-8 py-4 rounded-full font-semibold text-sm tracking-wide">Ver serviços</a>
+        </div>
+        <div class="flex items-center gap-8 mt-12 text-sm text-ink-soft">
+          <div><span class="font-display text-2xl text-ink block">12+</span>anos de experiência</div>
+          <div class="w-px h-10 bg-[#E2D2C7]"></div>
+          <div><span class="font-display text-2xl text-ink block">4.9</span>avaliação média</div>
+        </div>
+      </div>
+
+      <div class="relative fade-up" style="animation-delay:.15s">
+        <div class="rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white">
+          <img src="https://picsum.photos/seed/studiofabiana-hero/900/1000" alt="Ambiente do Studio Fabiana" class="w-full h-[420px] sm:h-[520px] object-cover">
+        </div>
+        <div class="absolute -bottom-8 -left-8 card rounded-2xl shadow-xl p-5 w-56 hidden sm:block">
+          <div class="flex items-center gap-2 mb-1">
+            <i data-lucide="sparkles" class="w-4 h-4 text-gold"></i>
+            <span class="font-display text-sm font-semibold">Plástica dos Pés</span>
+          </div>
+          <p class="text-xs text-ink-soft leading-relaxed">Técnica exclusiva para pés lisos, saudáveis e renovados.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos" class="py-24 bg-white reveal">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="max-w-xl mb-14">
+        <div class="divider-gold mb-4"></div>
+        <h2 class="font-display text-4xl mb-4">Nossos serviços</h2>
+        <p class="text-ink-soft leading-relaxed">Cada procedimento é feito sob medida, com produtos selecionados e instrumentais esterilizados individualmente.</p>
+      </div>
+
+      <div id="services-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section id="galeria" class="py-24 bg-nude-deep reveal">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="max-w-xl mb-14">
+        <div class="divider-gold mb-4"></div>
+        <h2 class="font-display text-4xl mb-4">Antes & depois</h2>
+        <p class="text-ink-soft leading-relaxed">Resultados reais das nossas clientes — transformação visível já na primeira sessão de plástica dos pés.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="card rounded-2xl overflow-hidden shadow-sm">
+          <div class="grid grid-cols-2">
+            <img src="https://picsum.photos/seed/pes-antes-1/300/300" class="w-full h-36 object-cover" alt="Antes">
+            <img src="https://picsum.photos/seed/pes-depois-1/300/300" class="w-full h-36 object-cover" alt="Depois">
+          </div>
+          <p class="text-xs text-center py-2 text-ink-soft font-medium">Plástica dos Pés — Mariana</p>
+        </div>
+        <div class="card rounded-2xl overflow-hidden shadow-sm">
+          <div class="grid grid-cols-2">
+            <img src="https://picsum.photos/seed/maos-antes-2/300/300" class="w-full h-36 object-cover" alt="Antes">
+            <img src="https://picsum.photos/seed/maos-depois-2/300/300" class="w-full h-36 object-cover" alt="Depois">
+          </div>
+          <p class="text-xs text-center py-2 text-ink-soft font-medium">Manicure em gel — Juliana</p>
+        </div>
+        <div class="card rounded-2xl overflow-hidden shadow-sm">
+          <div class="grid grid-cols-2">
+            <img src="https://picsum.photos/seed/pes-antes-3/300/300" class="w-full h-36 object-cover" alt="Antes">
+            <img src="https://picsum.photos/seed/pes-depois-3/300/300" class="w-full h-36 object-cover" alt="Depois">
+          </div>
+          <p class="text-xs text-center py-2 text-ink-soft font-medium">Pedicure spa — Renata</p>
+        </div>
+        <div class="card rounded-2xl overflow-hidden shadow-sm">
+          <div class="grid grid-cols-2">
+            <img src="https://picsum.photos/seed/calos-antes-4/300/300" class="w-full h-36 object-cover" alt="Antes">
+            <img src="https://picsum.photos/seed/calos-depois-4/300/300" class="w-full h-36 object-cover" alt="Depois">
+          </div>
+          <p class="text-xs text-center py-2 text-ink-soft font-medium">Remoção de calosidades — Bia</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section id="depoimentos" class="py-24 bg-white reveal">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="max-w-xl mb-14">
+        <div class="divider-gold mb-4"></div>
+        <h2 class="font-display text-4xl mb-4">Quem já passou por aqui</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-7" id="testimonials-grid"></div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="py-20 bg-rose-deep">
+    <div class="max-w-4xl mx-auto px-5 sm:px-8 text-center">
+      <h2 class="font-display text-3xl sm:text-4xl text-white mb-5">Pronta para cuidar de você?</h2>
+      <p class="text-white/85 mb-8">Escolha o serviço, a data e o horário — confirmamos na hora.</p>
+      <button onclick="openBooking()" class="btn-gold px-9 py-4 rounded-full font-semibold text-sm tracking-wide">Agendar agora</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-ink text-nude py-14">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row justify-between gap-8">
+      <div>
+        <span class="font-display text-2xl">Studio <span class="italic text-rose">Fabiana</span></span>
+        <p class="text-sm text-nude/60 mt-3 max-w-xs">Manicure, pedicure e plástica dos pés com técnica, higiene e carinho.</p>
+      </div>
+      <div class="text-sm text-nude/70 space-y-2">
+        <p class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-rose"></i> São Paulo, SP</p>
+        <p class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-rose"></i> (11) 99876-5432</p>
+        <p class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-rose"></i> Ter–Sáb · 12h30 às 19h</p>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 mt-10 pt-6 border-t border-white/10 text-xs text-nude/40">
+      © 2026 Studio Fabiana. Todos os direitos reservados.
+    </div>
+  </footer>
+</main>
+
+<!-- =================== LOGIN PAGE =================== -->
+<section id="page-login" class="page min-h-screen pt-32 pb-20 px-5">
+  <div class="max-w-md mx-auto card rounded-3xl shadow-sm p-8 sm:p-10 fade-up">
+    <div class="text-center mb-8">
+      <div class="divider-gold mx-auto mb-4"></div>
+      <h1 class="font-display text-3xl">Bem-vinda de volta</h1>
+      <p class="text-ink-soft text-sm mt-2">Entre para gerenciar seus agendamentos.</p>
+    </div>
+    <form id="login-form" class="space-y-5" novalidate>
+      <div>
+        <label class="text-sm font-medium mb-1.5 block">E-mail</label>
+        <input type="email" id="login-email" class="w-full border border-[#E2D2C7] rounded-xl px-4 py-3 text-sm bg-nude/40" placeholder="voce@email.com" required>
+        <p class="text-xs text-red-600 mt-1 hidden" data-error="login-email"></p>
+      </div>
+      <div>
+        <label class="text-sm font-medium mb-1.5 block">Senha</label>
+        <div class="relative">
+          <input type="password" id="login-password" class="w-full border border-[#E2D2C7] rounded-xl px-4 py-3 text-sm bg-nude/40 pr-11" placeholder="••••••••" required>
+          <button type="button" onclick="togglePw('login-password',this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-soft"><i data-lucide="eye" class="w-4 h-4"></i></button>
+        </div>
+        <p class="text-xs text-red-600 mt-1 hidden" data-error="login-password"></p>
+      </div>
+      <button type="submit" class="btn-primary w-full py-3.5 rounded-xl font-semibold text-sm">Entrar</button>
+    </form>
+    <p class="text-center text-sm text-ink-soft mt-6">Não tem conta? <button onclick="showPage('cadastro')" class="text-rose-deep font-semibold">Cadastre-se</button></p>
+    <p class="text-center text-xs text-ink-soft/70 mt-4">Acesso administrativo: admin@studiofabiana.com / Admin123!</p>
+  </div>
+</section>
+
+<!-- =================== CADASTRO PAGE =================== -->
+<section id="page-cadastro" class="page min-h-screen pt-32 pb-20 px-5">
+  <div class="max-w-md mx-auto card rounded-3xl shadow-sm p-8 sm:p-10 fade-up">
+    <div class="text-center mb-8">
+      <div class="divider-gold mx-auto mb-4"></div>
+      <h1 class="font-display text-3xl">Crie sua conta</h1>
+      <p class="text-ink-soft text-sm mt-2">Leva menos de um minuto.</p>
+    </div>
+    <form id="cadastro-form" class="space-y-5" novalidate>
+      <div>
+        <label class="text-sm font-medium mb-1.5 block">Nome completo</label>
+        <input type="text" id="cad-nome" class="w-full border border-[#E2D2C7] rounded-xl px-4 py-3 text-sm bg-nude/40" placeholder="Seu nome" required>
+        <p class="text-xs text-red-600 mt-1 hidden" data-error="cad-nome"></p>
+      </div>
+      <div>
+        <label class="text-sm font-medium mb-1.5 block">E-mail</label>
+        <input type="email" id="cad-email" class="w-full border border-[#E2D2C7] rounded-xl px-4 py-3 text-sm bg-nude/40" placeholder="voce@email.com" required>
+        <p class="text-xs text-red-600 mt-1 hidden" data-error="cad-email"></p>
+      </div>
+      <div>
+        <label class="text-sm font-medium mb-1.5 block">Telefone</label>
+        <input type="tel" id="cad-telefone" class="w-full border border-[#E2D2C7] rounded-xl px-4 py-3 text-sm bg-nude/40" placeholder="(11) 90000-0000" required>
+        <p class="text-xs text-red-600 mt-1 hidden" data-error="cad-telefone"></p>
+      </div>
+      <div>
+        <label class="text-sm font-medium mb-1.5 block">Senha</label>
+        <div class="relative">
+          <input type="password" id="cad-senha" class="w-full border border-[#E2D2C7] rounded-xl px-4 py-3 text-sm bg-nude/40 pr-11" placeholder="Mín. 8 caracteres" required>
+          <button type="button" onclick="togglePw('cad-senha',this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-soft"><i data-lucide="eye" class="w-4 h-4"></i></button>
+        </div>
+        <div class="flex gap-1 mt-2" id="pw-strength">
+          <span class="h-1 flex-1 rounded-full bg-[#EBDDD1]"></span>
+          <span class="h-1 flex-1 rounded-full bg-[#EBDDD1]"></span>
+          <span class="h-1 flex-1 rounded-full bg-[#EBDDD1]"></span>
+          <span class="h-1 flex-1 rounded-full bg-[#EBDDD1]"></span>
+        </div>
+        <p class="text-xs text-ink-soft/70 mt-1">Use letra maiúscula, número e símbolo.</p>
+        <p class="text-xs text-red-600 mt-1 hidden" data-error="cad-senha"></p>
+      </div>
+      <div>
+        <label class="text-sm font-medium mb-1.5 block">Confirmar senha</label>
+        <input type="password" id="cad-senha2" class="w-full border border-[#E2D2C7] rounded-xl px-4 py-3 text-sm bg-nude/40" placeholder="Repita a senha" required>
+        <p class="text-xs text-red-600 mt-1 hidden" data-error="cad-senha2"></p>
+      </div>
+      <button type="submit" class="btn-primary w-full py-3.5 rounded-xl font-semibold text-sm">Criar conta</button>
+    </form>
+    <p class="text-center text-sm text-ink-soft mt-6">Já tem conta? <button onclick="showPage('login')" class="text-rose-deep font-semibold">Entrar</button></p>
+  </div>
+</section>
+
+<!-- =================== PAINEL CLIENTE =================== -->
+<section id="page-cliente" class="page min-h-screen pt-28 pb-20 px-5 bg-nude-deep">
+  <div class="max-w-4xl mx-auto">
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-10">
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-gold font-semibold mb-1">Painel da cliente</p>
+        <h1 class="font-display text-3xl">Olá, <span id="cliente-nome" class="text-rose-deep italic"></span></h1>
+      </div>
+      <button onclick="openBooking()" class="btn-gold px-6 py-3 rounded-full font-semibold text-sm">+ Novo agendamento</button>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-5 mb-10">
+      <div class="card rounded-2xl p-5">
+        <p class="text-xs text-ink-soft mb-1">Próximos agendamentos</p>
+        <p class="font-display text-3xl" id="stat-cliente-proximos">0</p>
+      </div>
+      <div class="card rounded-2xl p-5">
+        <p class="text-xs text-ink-soft mb-1">Concluídos</p>
+        <p class="font-display text-3xl" id="stat-cliente-concluidos">0</p>
+      </div>
+      <div class="card rounded-2xl p-5">
+        <p class="text-xs text-ink-soft mb-1">Total investido</p>
+        <p class="font-display text-3xl" id="stat-cliente-total">R$ 0</p>
+      </div>
+    </div>
+
+    <h2 class="font-display text-2xl mb-4">Meus agendamentos</h2>
+    <div id="cliente-agendamentos" class="space-y-3"></div>
+  </div>
+</section>
+
+<!-- =================== PAINEL ADMIN =================== -->
+<section id="page-admin" class="page min-h-screen pt-28 pb-20 px-5 bg-nude-deep">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-10">
+      <p class="text-xs uppercase tracking-[0.2em] text-gold font-semibold mb-1">Área administrativa</p>
+      <h1 class="font-display text-3xl">Painel da gestora</h1>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-5 mb-10">
+      <div class="card rounded-2xl p-6">
+        <div class="flex items-center gap-2 text-ink-soft text-xs mb-2"><i data-lucide="banknote" class="w-4 h-4"></i>Faturamento estimado</div>
+        <p class="font-display text-3xl" id="stat-admin-faturamento">R$ 0</p>
+      </div>
+      <div class="card rounded-2xl p-6">
+        <div class="flex items-center gap-2 text-ink-soft text-xs mb-2"><i data-lucide="calendar-check" class="w-4 h-4"></i>Total de agendamentos</div>
+        <p class="font-display text-3xl" id="stat-admin-agendamentos">0</p>
+      </div>
+      <div class="card rounded-2xl p-6">
+        <div class="flex items-center gap-2 text-ink-soft text-xs mb-2"><i data-lucide="users" class="w-4 h-4"></i>Clientes cadastradas</div>
+        <p class="font-display text-3xl" id="stat-admin-clientes">0</p>
+      </div>
+    </div>
+
+    <div class="card rounded-2xl p-5 sm:p-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <h2 class="font-display text-xl">Todos os agendamentos</h2>
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="relative">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-ink-soft"></i>
+            <input type="text" id="admin-search" placeholder="Buscar cliente ou serviço" class="pl-9 pr-3 py-2 rounded-lg border border-[#E2D2C7] text-sm bg-nude/40 w-56">
+          </div>
+          <select id="admin-filter-status" class="py-2 px-3 rounded-lg border border-[#E2D2C7] text-sm bg-nude/40">
+            <option value="">Todos os status</option>
+            <option value="Pendente">Pendente</option>
+            <option value="Confirmado">Confirmado</option>
+            <option value="Concluido">Concluído</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
+        </div>
+      </div>
+      <div class="overflow-x-auto scrollbar-thin">
+        <table class="w-full text-sm min-w-[720px]">
+          <thead>
+            <tr class="text-left text-ink-soft text-xs uppercase tracking-wide border-b border-[#ECE0D6]">
+              <th class="py-3 pr-4">Cliente</th>
+              <th class="py-3 pr-4">Serviço</th>
+              <th class="py-3 pr-4">Data / Hora</th>
+              <th class="py-3 pr-4">Valor</th>
+              <th class="py-3 pr-4">Status</th>
+              <th class="py-3 pr-4">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="admin-table-body"></tbody>
+        </table>
+        <p id="admin-empty" class="text-center text-ink-soft text-sm py-10 hidden">Nenhum agendamento encontrado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== MODAL AGENDAMENTO =================== -->
+<div id="booking-modal" class="fixed inset-0 z-[90] hidden items-center justify-center p-4">
+  <div class="absolute inset-0 modal-backdrop" onclick="closeBooking()"></div>
+  <div class="relative bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl fade-up scrollbar-thin">
+    <div class="p-6 sm:p-8">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="font-display text-2xl">Agendar horário</h2>
+        <button onclick="closeBooking()" class="text-ink-soft hover:text-ink"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div id="booking-step-1">
+        <label class="text-sm font-medium mb-2 block">Escolha o serviço</label>
+        <div id="booking-services" class="space-y-2 mb-5 max-h-56 overflow-y-auto scrollbar-thin pr-1"></div>
+
+        <label class="text-sm font-medium mb-2 block">Escolha a data</label>
+        <input type="date" id="booking-date" class="w-full border border-[#E2D2C7] rounded-xl px-4 py-3 text-sm bg-nude/40 mb-5">
+
+        <label class="text-sm font-medium mb-2 block">Horário disponível <span class="text-xs text-ink-soft font-normal">(12h30 às 19h00)</span></label>
+        <div id="booking-slots" class="grid grid-cols-3 gap-2 mb-2"></div>
+        <p class="text-xs text-ink-soft mb-6">Horários ocupados aparecem riscados e desabilitados.</p>
+
+        <button onclick="confirmBooking()" class="btn-gold w-full py-3.5 rounded-xl font-semibold text-sm">Confirmar agendamento</button>
+      </div>
+
+      <div id="booking-step-2" class="hidden text-center py-4">
+        <div class="w-16 h-16 rounded-full bg-rose-pale flex items-center justify-center mx-auto mb-5">
+          <i data-lucide="check" class="w-8 h-8 text-rose-deep"></i>
+        </div>
+        <h3 class="font-display text-2xl mb-2">Agendamento confirmado!</h3>
+        <div class="bg-nude rounded-2xl p-5 text-left text-sm space-y-2 my-6" id="booking-summary"></div>
+        <button onclick="closeBooking()" class="btn-primary w-full py-3.5 rounded-xl font-semibold text-sm">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   STUDIO FABIANA — SPA (Vanilla JS + LocalStorage)
+   ========================================================= */
+
+/* ---------- Dados / Constantes ---------- */
+const SERVICES = [
+  { id:'man-trad', categoria:'Manicure', nome:'Manicure Tradicional', preco:45, duracao:40, desc:'Cutilagem, lixamento e esmaltação impecável.', icon:'hand' },
+  { id:'man-gel', categoria:'Manicure', nome:'Manicure em Gel', preco:75, duracao:60, desc:'Esmaltação em gel de alta durabilidade e brilho.', icon:'gem' },
+  { id:'ped-trad', categoria:'Pedicure', nome:'Pedicure Tradicional', preco:55, duracao:50, desc:'Cuidado completo com esfoliação e hidratação.', icon:'footprints' },
+  { id:'ped-spa', categoria:'Pedicure', nome:'Pedicure Spa', preco:95, duracao:70, desc:'Imersão relaxante, esfoliação e máscara hidratante.', icon:'droplets' },
+  { id:'plastica-pes', categoria:'Plástica dos Pés', nome:'Plástica dos Pés Completa', preco:150, duracao:90, desc:'Remoção de calosidades e rachaduras, pés renovados.', icon:'sparkles' },
+  { id:'plastica-express', categoria:'Plástica dos Pés', nome:'Plástica dos Pés Express', preco:110, duracao:60, desc:'Manutenção rápida para pés já tratados.', icon:'zap' },
+];
+
+const TESTIMONIALS = [
+  { nome:'Camila Duarte', texto:'A plástica dos pés mudou minha relação com sandálias abertas. Resultado impressionante já na primeira sessão.', nota:5 },
+  { nome:'Fernanda Lopes', texto:'Atendimento pontual, ambiente impecável e a manicure em gel dura semanas sem lascar.', nota:5 },
+  { nome:'Patrícia Nunes', texto:'Profissionalismo do início ao fim. O agendamento online é super prático.', nota:5 },
+];
+
+const OPENING_START = '12:30';
+const OPENING_END = '19:00';
+const SLOT_STEP_MIN = 30;
+
+const LS_USERS = 'sf_users';
+const LS_BOOKINGS = 'sf_bookings';
+const LS_SESSION = 'sf_session';
+
+/* ---------- Utilidades de armazenamento ---------- */
+function loadUsers(){ return JSON.parse(localStorage.getItem(LS_USERS) || '[]'); }
+function saveUsers(u){ localStorage.setItem(LS_USERS, JSON.stringify(u)); }
+function loadBookings(){ return JSON.parse(localStorage.getItem(LS_BOOKINGS) || '[]'); }
+function saveBookings(b){ localStorage.setItem(LS_BOOKINGS, JSON.stringify(b)); }
+function getSession(){ return JSON.parse(localStorage.getItem(LS_SESSION) || 'null'); }
+function setSession(s){ localStorage.setItem(LS_SESSION, JSON.stringify(s)); }
+function clearSession(){ localStorage.removeItem(LS_SESSION); }
+
+function seedData(){
+  let users = loadUsers();
+  if(!users.find(u => u.email === 'admin@studiofabiana.com')){
+    users.push({
+      id:'admin-1', nome:'Fabiana (Gestora)', email:'admin@studiofabiana.com',
+      telefone:'(11) 90000-0000', senha:'Admin123!', role:'admin'
+    });
+    saveUsers(users);
+  }
+}
+seedData();
+
+/* ---------- Ícones ---------- */
+function refreshIcons(){ if(window.lucide) lucide.createIcons(); }
+
+/* ---------- Toasts ---------- */
+function toast(msg, type='success'){
+  const wrap = document.getElementById('toast-wrap');
+  const el = document.createElement('div');
+  el.className = `toast ${type} rounded-xl px-4 py-3 flex items-start gap-3`;
+  const icon = type === 'error' ? 'alert-circle' : 'check-circle-2';
+  el.innerHTML = `<i data-lucide="${icon}" class="w-5 h-5 mt-0.5 flex-shrink-0 ${type==='error' ? 'text-red-600' : 'text-emerald-600'}"></i><span class="text-sm text-ink leading-snug">${msg}</span>`;
+  wrap.appendChild(el);
+  refreshIcons();
+  setTimeout(() => {
+    el.style.transition = 'opacity .3s ease, transform .3s ease';
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(24px)';
+    setTimeout(() => el.remove(), 300);
+  }, 3800);
+}
+
+/* ---------- Navegação de páginas ---------- */
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  window.scrollTo({ top:0, behavior:'instant' in window ? 'instant' : 'auto' });
+  if(name === 'cliente') renderClientDashboard();
+  if(name === 'admin') renderAdminDashboard();
+  refreshIcons();
+}
+function goHome(){ showPage('home'); }
+function scrollToSection(e, id){
+  e.preventDefault();
+  showPage('home');
+  setTimeout(() => {
+    document.getElementById(id).scrollIntoView({ behavior:'smooth', block:'start' });
+  }, 30);
+}
+
+/* ---------- Navbar dinâmica conforme sessão ---------- */
+function renderNav(){
+  const session = getSession();
+  const actions = document.getElementById('nav-actions');
+  if(!session){
+    actions.innerHTML = `
+      <button onclick="showPage('login')" class="hidden sm:inline-block text-sm font-medium text-ink-soft hover:text-ink px-3">Entrar</button>
+      <button onclick="showPage('cadastro')" class="btn-primary px-5 py-2.5 rounded-full text-sm font-semibold">Cadastrar</button>
+    `;
+  } else if(session.role === 'admin'){
+    actions.innerHTML = `
+      <button onclick="showPage('admin')" class="text-sm font-medium text-ink-soft hover:text-ink px-3 hidden sm:inline-block">Painel</button>
+      <button onclick="logout()" class="btn-outline px-5 py-2.5 rounded-full text-sm font-semibold">Sair</button>
+    `;
+  } else {
+    actions.innerHTML = `
+      <button onclick="showPage('cliente')" class="text-sm font-medium text-ink-soft hover:text-ink px-3 hidden sm:inline-block">Minha conta</button>
+      <button onclick="logout()" class="btn-outline px-5 py-2.5 rounded-full text-sm font-semibold">Sair</button>
+    `;
+  }
+  refreshIcons();
+}
+
+function logout(){
+  clearSession();
+  renderNav();
+  showPage('home');
+  toast('Sessão encerrada. Até breve!');
+}
+
+/* ---------- Renderização de Serviços / Depoimentos ---------- */
+function renderServices(){
+  const grid = document.getElementById('services-grid');
+  grid.innerHTML = SERVICES.map(s => `
+    <div class="card rounded-2xl p-6 flex flex-col">
+      <div class="w-11 h-11 rounded-full bg-rose-pale flex items-center justify-center mb-5">
+        <i data-lucide="${s.icon}" class="w-5 h-5 text-rose-deep"></i>
+      </div>
+      <p class="text-xs text-gold font-semibold uppercase tracking-wide mb-1">${s.categoria}</p>
+      <h3 class="font-display text-xl mb-2">${s.nome}</h3>
+      <p class="text-sm text-ink-soft leading-relaxed mb-5 flex-1">${s.desc}</p>
+      <div class="flex items-center justify-between pt-4 border-t border-[#ECE0D6]">
+        <span class="text-xs text-ink-soft flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i>${s.duracao} min</span>
+        <span class="font-display text-lg text-rose-deep">R$ ${s.preco}</span>
+      </div>
+    </div>
+  `).join('');
+  refreshIcons();
+}
+
+function renderTestimonials(){
+  const grid = document.getElementById('testimonials-grid');
+  grid.innerHTML = TESTIMONIALS.map(t => `
+    <div class="card rounded-2xl p-6">
+      <div class="flex gap-0.5 mb-4 text-gold">
+        ${'<i data-lucide="star" class="w-4 h-4 fill-current"></i>'.repeat(t.nota)}
+      </div>
+      <p class="text-sm text-ink-soft leading-relaxed mb-5">“${t.texto}”</p>
+      <p class="font-display text-base">${t.nome}</p>
+    </div>
+  `).join('');
+  refreshIcons();
+}
+
+renderServices();
+renderTestimonials();
+renderNav();
+
+/* ---------- Scroll reveal ---------- */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold:.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ---------- Navbar shadow on scroll ---------- */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if(window.scrollY > 10){
+    nav.classList.add('bg-white/90','backdrop-blur','shadow-sm');
+  } else {
+    nav.classList.remove('bg-white/90','backdrop-blur','shadow-sm');
+  }
+});
+
+/* ---------- Validações ---------- */
+function isValidEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+function passwordScore(v){
+  let score = 0;
+  if(v.length >= 8) score++;
+  if(/[A-Z]/.test(v)) score++;
+  if(/[0-9]/.test(v)) score++;
+  if(/[^A-Za-z0-9]/.test(v)) score++;
+  return score;
+}
+function setFieldError(id, msg){
+  const input = document.getElementById(id);
+  const err = document.querySelector(`[data-error="${id}"]`);
+  if(msg){
+    input.classList.add('border-red-400');
+    err.textContent = msg;
+    err.classList.remove('hidden');
+  } else {
+    input.classList.remove('border-red-400');
+    err.classList.add('hidden');
+  }
+}
+
+/* ---- Força de senha em tempo real (cadastro) ---- */
+const cadSenhaEl = document.getElementById('cad-senha');
+cadSenhaEl.addEventListener('input', () => {
+  const score = passwordScore(cadSenhaEl.value);
+  const bars = document.querySelectorAll('#pw-strength span');
+  const colors = ['#E4544B','#E4544B','#D9A441','#3F8A5A'];
+  bars.forEach((bar, i) => {
+    bar.style.background = i < score ? colors[Math.max(score-1,0)] : '#EBDDD1';
+  });
+  if(cadSenhaEl.value.length === 0){ setFieldError('cad-senha',''); }
+  else if(score < 3){ setFieldError('cad-senha','Senha fraca — use maiúscula, número e símbolo.'); }
+  else { setFieldError('cad-senha',''); }
+});
+document.getElementById('cad-email').addEventListener('input', function(){
+  if(this.value && !isValidEmail(this.value)) setFieldError('cad-email','Digite um e-mail válido.');
+  else setFieldError('cad-email','');
+});
+document.getElementById('cad-senha2').addEventListener('input', function(){
+  if(this.value && this.value !== cadSenhaEl.value) setFieldError('cad-senha2','As senhas não coincidem.');
+  else setFieldError('cad-senha2','');
+});
+document.getElementById('cad-telefone').addEventListener('input', function(){
+  let v = this.value.replace(/\D/g,'').slice(0,11);
+  if(v.length > 6) v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+  else if(v.length > 2) v = `(${v.slice(0,2)}) ${v.slice(2)}`;
+  this.value = v;
+});
+
+function togglePw(id, btn){
+  const input = document.getElementById(id);
+  const isPw = input.type === 'password';
+  input.type = isPw ? 'text' : 'password';
+  btn.innerHTML = `<i data-lucide="${isPw ? 'eye-off' : 'eye'}" class="w-4 h-4"></i>`;
+  refreshIcons();
+}
+
+/* ---------- Cadastro ---------- */
+document.getElementById('cadastro-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const nome = document.getElementById('cad-nome').value.trim();
+  const email = document.getElementById('cad-email').value.trim().toLowerCase();
+  const telefone = document.getElementById('cad-telefone').value.trim();
+  const senha = document.getElementById('cad-senha').value;
+  const senha2 = document.getElementById('cad-senha2').value;
+
+  let valid = true;
+  setFieldError('cad-nome','');
+  if(nome.length < 3){ setFieldError('cad-nome','Informe seu nome completo.'); valid = false; }
+  if(!isValidEmail(email)){ setFieldError('cad-email','Digite um e-mail válido.'); valid = false; }
+  if(telefone.replace(/\D/g,'').length < 10){ setFieldError('cad-telefone','Informe um telefone válido.'); valid = false; }
+  if(passwordScore(senha) < 3){ setFieldError('cad-senha','Senha fraca — use maiúscula, número e símbolo.'); valid = false; }
+  if(senha !== senha2){ setFieldError('cad-senha2','As senhas não coincidem.'); valid = false; }
+
+  const users = loadUsers();
+  if(users.find(u => u.email === email)){
+    setFieldError('cad-email','Este e-mail já está cadastrado.');
+    valid = false;
+  }
+  if(!valid) return;
+
+  const newUser = { id:'u-' + Date.now(), nome, email, telefone, senha, role:'cliente' };
+  users.push(newUser);
+  saveUsers(users);
+  setSession({ id:newUser.id, nome:newUser.nome, email:newUser.email, role:'cliente' });
+  renderNav();
+  toast(`Bem-vinda, ${nome.split(' ')[0]}! Conta criada com sucesso.`);
+  showPage('cliente');
+  this.reset();
+});
+
+/* ---------- Login ---------- */
+document.getElementById('login-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
+  const senha = document.getElementById('login-password').value;
+  setFieldError('login-email','');
+  setFieldError('login-password','');
+
+  if(!isValidEmail(email)){ setFieldError('login-email','Digite um e-mail válido.'); return; }
+  if(!senha){ setFieldError('login-password','Digite sua senha.'); return; }
+
+  const users = loadUsers();
+  const user = users.find(u => u.email === email);
+  if(!user || user.senha !== senha){
+    setFieldError('login-password','E-mail ou senha incorretos.');
+    toast('Não foi possível entrar. Verifique seus dados.', 'error');
+    return;
+  }
+
+  setSession({ id:user.id, nome:user.nome, email:user.email, role:user.role });
+  renderNav();
+  toast(`Login realizado. Bem-vinda de volta, ${user.nome.split(' ')[0]}!`);
+  this.reset();
+  showPage(user.role === 'admin' ? 'admin' : 'cliente');
+});
+
+/* ---------- Agenda: geração de horários ---------- */
+function timeToMinutes(t){ const [h,m] = t.split(':').map(Number); return h*60+m; }
+function minutesToTime(m){ const h = Math.floor(m/60).toString().padStart(2,'0'); const mm = (m%60).toString().padStart(2,'0'); return `${h}:${mm}`; }
+function generateSlots(){
+  const slots = [];
+  const start = timeToMinutes(OPENING_START);
+  const end = timeToMinutes(OPENING_END);
+  for(let t = start; t < end; t += SLOT_STEP_MIN){ slots.push(minutesToTime(t)); }
+  return slots;
+}
+const ALL_SLOTS = generateSlots();
+
+/* ---------- Modal de agendamento ---------- */
+let bookingState = { serviceId:null, date:null, time:null };
+
+function openBooking(){
+  const session = getSession();
+  if(!session){
+    toast('Faça login ou cadastre-se para agendar.', 'error');
+    showPage('login');
+    return;
+  }
+  bookingState = { serviceId:null, date:null, time:null };
+  document.getElementById('booking-step-1').classList.remove('hidden');
+  document.getElementById('booking-step-2').classList.add('hidden');
+
+  const list = document.getElementById('booking-services');
+  list.innerHTML = SERVICES.map(s => `
+    <label class="flex items-center justify-between gap-3 border border-[#E2D2C7] rounded-xl px-4 py-3 cursor-pointer text-sm has-[:checked]:border-rose-deep has-[:checked]:bg-rose-pale/40">
+      <span class="flex items-center gap-3">
+        <input type="radio" name="booking-service" value="${s.id}" class="accent-[#A66F66]" onchange="selectService('${s.id}')">
+        <span>
+          <span class="font-medium block">${s.nome}</span>
+          <span class="text-xs text-ink-soft">${s.duracao} min</span>
+        </span>
+      </span>
+      <span class="font-display text-rose-deep">R$ ${s.preco}</span>
+    </label>
+  `).join('');
+
+  const dateInput = document.getElementById('booking-date');
+  const today = new Date();
+  dateInput.min = today.toISOString().split('T')[0];
+  dateInput.value = '';
+  dateInput.onchange = renderSlots;
+
+  document.getElementById('booking-slots').innerHTML = '<p class="col-span-3 text-xs text-ink-soft">Selecione uma data para ver os horários.</p>';
+
+  document.getElementById('booking-modal').classList.remove('hidden');
+  document.getElementById('booking-modal').classList.add('flex');
+  refreshIcons();
+}
+
+function closeBooking(){
+  document.getElementById('booking-modal').classList.add('hidden');
+  document.getElementById('booking-modal').classList.remove('flex');
+}
+
+function selectService(id){ bookingState.serviceId = id; renderSlots(); }
+
+function renderSlots(){
+  const date = document.getElementById('booking-date').value;
+  bookingState.date = date;
+  bookingState.time = null;
+  const wrap = document.getElementById('booking-slots');
+  if(!date){
+    wrap.innerHTML = '<p class="col-span-3 text-xs text-ink-soft">Selecione uma data para ver os horários.</p>';
+    return;
+  }
+  const bookings = loadBookings();
+  const takenTimes = bookings
+    .filter(b => b.date === date && b.status !== 'Cancelado')
+    .map(b => b.time);
+
+  wrap.innerHTML = ALL_SLOTS.map(t => {
+    const disabled = takenTimes.includes(t);
+    return `<button type="button" ${disabled ? 'disabled' : ''} onclick="pickSlot('${t}', this)" class="time-slot border border-[#E2D2C7] rounded-lg py-2 text-sm">${t}</button>`;
+  }).join('');
+}
+
+function pickSlot(t, btn){
+  bookingState.time = t;
+  document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function confirmBooking(){
+  const session = getSession();
+  if(!bookingState.serviceId){ toast('Escolha um serviço.', 'error'); return; }
+  if(!bookingState.date){ toast('Escolha uma data.', 'error'); return; }
+  if(!bookingState.time){ toast('Escolha um horário disponível.', 'error'); return; }
+
+  const bookings = loadBookings();
+  const conflict = bookings.some(b => b.date === bookingState.date && b.time === bookingState.time && b.status !== 'Cancelado');
+  if(conflict){
+    toast('Esse horário acabou de ser reservado. Escolha outro.', 'error');
+    renderSlots();
+    return;
+  }
+
+  const service = SERVICES.find(s => s.id === bookingState.serviceId);
+  const booking = {
+    id:'ag-' + Date.now(),
+    clienteId:session.id,
+    clienteNome:session.nome,
+    clienteEmail:session.email,
+    serviceId:service.id,
+    serviceNome:service.nome,
+    preco:service.preco,
+    duracao:service.duracao,
+    date:bookingState.date,
+    time:bookingState.time,
+    status:'Pendente',
+    criadoEm:new Date().toISOString(),
+  };
+  bookings.push(booking);
+  saveBookings(bookings);
+
+  const dataFormatada = new Date(bookingState.date + 'T00:00:00').toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
+  document.getElementById('booking-summary').innerHTML = `
+    <div class="flex justify-between"><span class="text-ink-soft">Serviço</span><span class="font-medium">${service.nome}</span></div>
+    <div class="flex justify-between"><span class="text-ink-soft">Data</span><span class="font-medium">${dataFormatada}</span></div>
+    <div class="flex justify-between"><span class="text-ink-soft">Horário</span><span class="font-medium">${bookingState.time}</span></div>
+    <div class="flex justify-between"><span class="text-ink-soft">Valor</span><span class="font-medium">R$ ${service.preco}</span></div>
+    <div class="flex justify-between pt-2 border-t border-[#ECE0D6]"><span class="text-ink-soft">Status</span><span class="status-pill status-Pendente">Pendente</span></div>
+  `;
+  document.getElementById('booking-step-1').classList.add('hidden');
+  document.getElementById('booking-step-2').classList.remove('hidden');
+  toast('Agendamento realizado com sucesso!');
+  refreshIcons();
+
+  if(document.getElementById('page-cliente').classList.contains('active')) renderClientDashboard();
+  if(document.getElementById('page-admin').classList.contains('active')) renderAdminDashboard();
+}
+
+/* ---------- Painel do cliente ---------- */
+function renderClientDashboard(){
+  const session = getSession();
+  if(!session || session.role !== 'cliente'){ showPage('login'); return; }
+  document.getElementById('cliente-nome').textContent = session.nome.split(' ')[0];
+
+  const bookings = loadBookings().filter(b => b.clienteId === session.id)
+    .sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
+
+  const now = new Date();
+  const futuros = bookings.filter(b => new Date(b.date+'T'+b.time) >= now && (b.status === 'Pendente' || b.status === 'Confirmado'));
+  const concluidos = bookings.filter(b => b.status === 'Concluido');
+  const totalGasto = bookings.filter(b => b.status !== 'Cancelado').reduce((sum,b) => sum + b.preco, 0);
+
+  document.getElementById('stat-cliente-proximos').textContent = futuros.length;
+  document.getElementById('stat-cliente-concluidos').textContent = concluidos.length;
+  document.getElementById('stat-cliente-total').textContent = 'R$ ' + totalGasto;
+
+  const list = document.getElementById('cliente-agendamentos');
+  if(bookings.length === 0){
+    list.innerHTML = `<div class="card rounded-2xl p-10 text-center text-ink-soft text-sm">Você ainda não tem agendamentos. <button onclick="openBooking()" class="text-rose-deep font-semibold">Agendar agora</button></div>`;
+    return;
+  }
+
+  list.innerHTML = bookings.map(b => {
+    const dataFormatada = new Date(b.date + 'T00:00:00').toLocaleDateString('pt-BR', { day:'2-digit', month:'short', year:'numeric' });
+    const canCancel = (b.status === 'Pendente' || b.status === 'Confirmado') && new Date(b.date+'T'+b.time) >= now;
+    return `
+      <div class="card rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p class="font-display text-lg">${b.serviceNome}</p>
+          <p class="text-sm text-ink-soft flex items-center gap-3 mt-1">
+            <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3.5 h-3.5"></i>${dataFormatada}</span>
+            <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i>${b.time}</span>
+            <span>R$ ${b.preco}</span>
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="status-pill status-${b.status}">${b.status === 'Concluido' ? 'Concluído' : b.status}</span>
+          ${canCancel ? `<button onclick="cancelClientBooking('${b.id}')" class="text-xs font-semibold text-red-600 hover:underline">Cancelar</button>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+  refreshIcons();
+}
+
+function cancelClientBooking(id){
+  const bookings = loadBookings();
+  const b = bookings.find(x => x.id === id);
+  if(!b) return;
+  b.status = 'Cancelado';
+  saveBookings(bookings);
+  toast('Agendamento cancelado.');
+  renderClientDashboard();
+}
+
+/* ---------- Painel Admin ---------- */
+function renderAdminDashboard(){
+  const session = getSession();
+  if(!session || session.role !== 'admin'){ showPage('login'); return; }
+
+  const bookings = loadBookings();
+  const users = loadUsers();
+  const faturamento = bookings.filter(b => b.status === 'Confirmado' || b.status === 'Concluido').reduce((s,b) => s + b.preco, 0);
+  document.getElementById('stat-admin-faturamento').textContent = 'R$ ' + faturamento;
+  document.getElementById('stat-admin-agendamentos').textContent = bookings.length;
+  document.getElementById('stat-admin-clientes').textContent = users.filter(u => u.role === 'cliente').length;
+
+  drawAdminTable();
+
+  document.getElementById('admin-search').oninput = drawAdminTable;
+  document.getElementById('admin-filter-status').onchange = drawAdminTable;
+}
+
+function drawAdminTable(){
+  const bookings = loadBookings().sort((a,b) => (b.date+b.time).localeCompare(a.date+a.time));
+  const search = (document.getElementById('admin-search').value || '').toLowerCase();
+  const statusFilter = document.getElementById('admin-filter-status').value;
+
+  const filtered = bookings.filter(b => {
+    const matchSearch = b.clienteNome.toLowerCase().includes(search) || b.serviceNome.toLowerCase().includes(search);
+    const matchStatus = !statusFilter || b.status === statusFilter;
+    return matchSearch && matchStatus;
+  });
+
+  const body = document.getElementById('admin-table-body');
+  const empty = document.getElementById('admin-empty');
+
+  if(filtered.length === 0){
+    body.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+
+  body.innerHTML = filtered.map(b => {
+    const dataFormatada = new Date(b.date + 'T00:00:00').toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' });
+    return `
+      <tr class="border-b border-[#F1E7DD]">
+        <td class="py-3 pr-4">
+          <p class="font-medium">${b.clienteNome}</p>
+          <p class="text-xs text-ink-soft">${b.clienteEmail}</p>
+        </td>
+        <td class="py-3 pr-4">${b.serviceNome}</td>
+        <td class="py-3 pr-4">${dataFormatada} · ${b.time}</td>
+        <td class="py-3 pr-4">R$ ${b.preco}</td>
+        <td class="py-3 pr-4"><span class="status-pill status-${b.status}">${b.status === 'Concluido' ? 'Concluído' : b.status}</span></td>
+        <td class="py-3 pr-4">
+          <div class="flex items-center gap-3 text-xs font-semibold">
+            ${b.status !== 'Confirmado' && b.status !== 'Cancelado' ? `<button onclick="adminUpdateStatus('${b.id}','Confirmado')" class="text-emerald-700 hover:underline">Confirmar</button>` : ''}
+            ${b.status !== 'Concluido' && b.status !== 'Cancelado' ? `<button onclick="adminUpdateStatus('${b.id}','Concluido')" class="text-indigo-700 hover:underline">Concluir</button>` : ''}
+            ${b.status !== 'Cancelado' ? `<button onclick="adminUpdateStatus('${b.id}','Cancelado')" class="text-amber-700 hover:underline">Cancelar</button>` : ''}
+            <button onclick="adminDeleteBooking('${b.id}')" class="text-red-600 hover:underline">Excluir</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function adminUpdateStatus(id, status){
+  const bookings = loadBookings();
+  const b = bookings.find(x => x.id === id);
+  if(!b) return;
+  b.status = status;
+  saveBookings(bookings);
+  toast(`Agendamento marcado como ${status === 'Concluido' ? 'Concluído' : status}.`);
+  renderAdminDashboard();
+}
+
+function adminDeleteBooking(id){
+  let bookings = loadBookings();
+  bookings = bookings.filter(x => x.id !== id);
+  saveBookings(bookings);
+  toast('Agendamento excluído.');
+  renderAdminDashboard();
+}
+
+/* ---------- Sessão ativa ao carregar ---------- */
+(function initSession(){
+  const session = getSession();
+  if(session){
+    renderNav();
+  }
+})();
+
+refreshIcons();
+</script>
+</body>
+</html>
